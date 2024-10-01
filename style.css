@@ -4,15 +4,15 @@
 }
 
 @font-face {
-    font-family: 'Futura';
-    src: url('fonts/Futura\ Book\ font.ttf') format('truetype');
+    font-family: 'Nunito';
+    src: url('fonts/Nunito-Medium.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 body {
     color: #000;
-    font-family: Futura, sans-serif;
+    font-family: 'Nunito', sans-serif;
     font-size: 16px;
     font-weight: 400;
     background-color: #fbf9f5;
@@ -61,7 +61,7 @@ textarea {
     vertical-align: top;
     resize: vertical;
     margin: 10px 0px;
-    font-family: Futura, sans-serif;
+    font-family: 'Nunito', sans-serif;
     font-weight: 400;
 }
 
