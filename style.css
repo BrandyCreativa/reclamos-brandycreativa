@@ -1,0 +1,180 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'Futura';
+    src: url('fonts/Futura\ Book\ font.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    color: #000;
+    font-family: Futura, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    background-color: #fbf9f5;
+}
+
+.main {
+    position: absolute;
+    width: 90%;
+    left: calc(50% - 45%);
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+form {
+    position: relative;
+    overflow-x: none;
+}
+
+input,
+select {
+    padding: 1rem 1.5rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    color: rgb(85, 85, 85);
+    height: 12px;
+    width: 90%;
+    margin: 10px 0px;
+}
+
+select {
+    padding: 0;
+    max-width: fit-content !important;
+    height: 48px;
+    padding: 1rem;
+}
+
+textarea {
+    padding: 1rem 1.5rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    border: 1px solid #dedede;
+    color: rgb(85, 85, 85);
+    width: 90%;
+    overflow: auto;
+    vertical-align: top;
+    resize: vertical;
+    margin: 10px 0px;
+    font-family: Futura, sans-serif;
+    font-weight: 400;
+}
+
+#menorDeEdad {
+    width: 40px;
+}
+
+.datos-personales,
+.info-general,
+.detalle-reclamo {
+    background-color: #e6dee5;
+    margin: 12px 0px;
+    padding: 2rem 1rem 2rem 2rem;
+}
+
+hr {
+    margin: 18px 0px;
+}
+
+.center {
+    text-align: center;
+    align-items: center;
+}
+
+.texto {
+    font-size: .9rem;
+    margin-left: 1rem;
+}
+
+#send {
+    background-color: #fbf9f5;
+    color: #000;
+    padding: 1rem 1.5rem;
+    border: 1px solid #000;
+    height: 48px;
+    width: 100%;
+    margin: 10px 0px;
+    cursor: pointer;
+}
+
+.checkboxes {
+    display: inline-flex;
+    align-items: center;
+    padding: 1rem;
+    flex-wrap: nowrap;
+    max-width: 90%;
+    box-sizing: border-box;
+}
+
+.checkboxes input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    border: 1px solid #000;
+    width: 14px;
+    height: 14px;
+    padding: 0;
+    background-color: #fff;
+}
+
+.checkboxes input[type="checkbox"]:checked {
+    -webkit-appearance: checkbox;
+    appearance: checkbox;
+}
+
+.info {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.info input {
+    max-width: fit-content;
+    margin-left: 1rem;
+}
+
+.info div {
+    display: flex;
+    flex-direction: column;
+}
+
+.checkboxes #servicio {
+    margin-left: 20px;
+}
+
+.exito {
+    color: #4CAF50;
+    text-align: center;
+    margin-bottom: 1rem;
+    display: none;
+}
+
+.aviso {
+    padding: 1rem 12rem;
+}
+
+.aviso p {
+    text-align: justify;
+}
+
+@media screen and (max-width: 1000px) {
+
+    h2,
+    h3 {
+        font-size: .9rem;
+    }
+
+    .datos-personales,
+    .info-general,
+    .detalle-reclamo {
+        padding: 2rem 2rem 2rem 1rem;
+    }
+
+    .aviso {
+        padding: 2rem 0rem;
+    }
+
+}

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libro de Reclamaciones - Brandy Creativa</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+        (function () {
+            emailjs.init({
+                publicKey: "hwcPq3GQOChAdijAV",
+            });
+        })();
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var today = new Date();
+            var day = ("0" + today.getDate()).slice(-2);
+            var month = ("0" + (today.getMonth() + 1)).slice(-2);
+            var year = today.getFullYear();
+            var formattedDate = year + "-" + month + "-" + day;
+
+            document.getElementById('fecha').value = "Fecha actual: " + formattedDate;
+        });
+
+        function toggleApoderado() {
+            const apoderadoFields = document.getElementById('apoderadoFields');
+            const isMenorDeEdad = document.getElementById('menorDeEdad').checked;
+            apoderadoFields.style.display = isMenorDeEdad ? 'block' : 'none';
+        }
+
+        function mostrarInput() {
+            var tipoRespuesta = document.getElementById("tipoRespuesta").value;
+            var inputCorreo = document.getElementById("inputCorreo");
+            var inputDireccion = document.getElementById("inputDireccion");
+
+            if (tipoRespuesta === "Correo") {
+                inputCorreo.style.display = "block";
+                inputDireccion.style.display = "none";
+            } else if (tipoRespuesta === "Dirección") {
+                inputCorreo.style.display = "none";
+                inputDireccion.style.display = "block";
+            }
+        }
+
+        function soloUno(checkbox) {
+            var checkboxes = document.querySelectorAll('input[name="tipo"]');
+            checkboxes.forEach(function (box) {
+                if (box !== checkbox) {
+                    box.checked = false;
+                }
+            });
+        }
+
+        function openModal() {
+            document.getElementById('confirmationModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('confirmationModal').style.display = 'none';
+        }
+
+        function openModal() {
+            sendButton = document.getElementById('send');
+            exito = document.getElementById('confirm');
+            sendButton.value = "Enviado";
+            sendButton.style.backgroundColor = "#4CAF50";
+            sendButton.style.color = "#fff";
+            sendButton.disabled = true;
+            exito.style.display = 'block';
+        }
+
+    </script>
+</head>
+
+<body>
+    <div class="main">
+        <form id="contact-form">
+
+            <div class="datos-personales">
+                <h2>1. Datos de la persona que presenta el reclamo</h2>
+                <hr>
+                <select id="tipoDocumento" name="tipoDocumento" required>
+                    <option value="" disabled selected>Tipo de documento</option>
+                    <option value="DNI">DNI</option>
+                    <option value="RUC">RUC</option>
+                    <option value="C.E">C.E</option>
+                    <option value="PASAPORTE">PASAPORTE</option>
+                </select><br>
+
+                <input type="text" id="numeroDocumento" name="numeroDocumento" placeholder="Número de documento *"
+                    required><br>
+
+                <input type="text" id="nombres" name="nombres" placeholder="Nombres *" required><br>
+
+                <input type="text" id="apellido1" name="apellido1" placeholder="Apellido Paterno *" required><br>
+
+                <input type="text" id="apellido2" name="apellido2" placeholder="Apellido Materno *" required><br>
+
+                <select id="tipoRespuesta" name="tipoRespuesta" required onchange="mostrarInput()">
+                    <option value="" disabled selected>Seleccione el tipo de respuesta</option>
+                    <option value="Correo">Correo electrónico</option>
+                    <option value="Dirección">Dirección</option>
+                </select><br>
+
+                <div id="inputCorreo">
+                    <input type="email" id="email" name="email" placeholder="Correo Electrónico *"><br>
+                </div>
+
+                <div id="inputDireccion" style="display:none;">
+                    <input type="text" id="direccion" name="direccion" placeholder="Ingresa tu dirección *"><br>
+                </div>
+
+                <input type="text" id="departamento" name="departamento" placeholder="Departamento *" required><br>
+
+                <input type="text" id="provincia" name="provincia" placeholder="Provincia *" required><br>
+
+                <input type="text" id="distrito" name="distrito" placeholder="Distrito *" required><br>
+
+                <input type="tel" id="telefono" name="telefono" placeholder="Teléfono *" required><br>
+
+                <label for="emailComprobante" class="texto">Por favor ingresa tu email para poder notificar
+                    el comprobante de tu reclamo</label>
+                <input type="email" id="emailComprobante" name="emailComprobante" placeholder="Email *" required><br>
+
+                <input type="checkbox" id="menorDeEdad" name="menorDeEdad" onclick="toggleApoderado()">
+                <label for="menorDeEdad">Menor de Edad</label><br>
+            </div>
+
+            <div id="apoderadoFields" style="display:none;">
+                <h3>Datos del Apoderado</h3>
+
+                <select id="tipoDocumentoApoderado" name="tipoDocumentoApoderado">
+                    <option value="" disabled selected>Seleccione un tipo de documento</option>
+                    <option value="DNI">DNI</option>
+                    <option value="RUC">RUC</option>
+                    <option value="C.E">C.E</option>
+                    <option value="PASAPORTE">PASAPORTE</option>
+                </select><br>
+
+                <input type="text" id="numeroDocumentoApoderado" name="numeroDocumentoApoderado"
+                    placeholder="Número de documento *"><br>
+
+                <input type="text" id="nombresApoderado" name="nombresApoderado" placeholder="Nombres *"><br>
+
+                <input type="text" id="apellido1Apoderado" name="apellido1Apoderado"
+                    placeholder="Apellido Paterno *"><br>
+
+                <input type="text" id="apellido2Apoderado" name="apellido2Apoderado"
+                    placeholder="Apellido Materno *"><br>
+            </div>
+
+            <div class="info-general">
+                <h2>2. Información General</h2>
+                <hr>
+                <div class="info">
+                    <div>
+                        <label for="tienda" class="texto">Tienda de compra</label>
+                        <input type="text" id="tienda" name="tienda" placeholder="BRANDYCREATIVA.COM" disabled readonly>
+                    </div>
+                    <div>
+                        <label for="ubi" class="texto">Ubicación de la tienda</label>
+                        <input type="text" id="ubi" name="ubi" placeholder="BRANDYCREATIVA.COM" disabled readonly>
+                    </div>
+                </div><br>
+                <h3>Identificación del Bien Contratado:</h3>
+                <div class="checkboxes">
+                    <input type="checkbox" id="producto" name="tipo" onclick="soloUno(this)">
+                    <label for="producto" style="margin-left: 4px;">Producto</label><br>
+
+                    <input type="checkbox" id="servicio" name="tipo" onclick="soloUno(this)">
+                    <label for="servicio" style="margin-left: 4px;">Servicio</label><br>
+                </div>
+                <input type="hidden" id="bienContratado" name="bienContratado">
+
+                <input type="number" id="montoReclamado" name="montoReclamado" placeholder="Monto Reclamado S/."><br>
+
+                <textarea id="descripcionProducto" name="descripcionProducto" rows="4"
+                    placeholder="Nombre del Producto/Servicio *" required></textarea><br>
+            </div>
+
+            <div class="detalle-reclamo">
+                <h2>3. Detalle de su reclamo</h2>
+                <hr>
+                <input type="text" id="fecha" name="fecha" value="" readonly disabled>
+
+                <select id="tipoSolicitud" name="tipoSolicitud" required>
+                    <option value="" disabled selected>Seleccione el tipo de solicitud</option>
+                    <option value="Queja">Queja</option>
+                    <option value="Reclamo">Reclamo</option>
+                </select><br>
+
+                <textarea id="detalleReclamo" name="detalleReclamo" rows="4" placeholder="Detalle de la solicitud *"
+                    required></textarea><br>
+
+                <textarea id="pedido" name="pedido" rows="4" placeholder="Pedido *" required></textarea><br>
+
+            </div>
+            <span class="exito" id="confirm">
+                Nos pondremos en contacto contigo respondiendo tu solicitud en un plazo máximo de 15 días hábiles.
+            </span>
+            <input type="submit" value="Enviar" id="send">
+        </form>
+        <div class="aviso">
+            <p>
+                Estimado cliente,
+            </p><br>
+            <p>
+                Conforme a lo establecido en el Reglamento del Libro de Reclamaciones del Código de Protección y
+                Defensa del Consumidor ponemos a tu disposición nuestro Libro de Reclamaciones Virtual.
+            </p><br>
+            <p>
+                A través de nuestro Libro de Reclamaciones Virtual podrás presentar un reclamo o queja respecto
+                a tu disconformidad por un producto o servicio ofrecido por brandycreativa.com
+            </p><br>
+            <p>El proveedor deberá dar respuesta al reclamo en un plazo no mayor a quince (15) días hábiles
+                improrrogables</p><br>
+            <p>
+                Te informamos que los datos que ingreses al momento de presentar tu reclamo o queja, a través de
+                nuestro Libro de Reclamaciones Virtual, serán tratados conforme nuestra Políticas de Datos Personales,
+                con la finalidad de gestionar y dar respuesta al mismo, dentro del plazo legal.
+            </p>
+        </div>
+    </div>
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const emailField = document.getElementById('email');
+            const direccionField = document.getElementById('direccion');
+            const numeroDocumentoApoderadoField = document.getElementById('numeroDocumentoApoderado');
+            const nombresApoderadoField = document.getElementById('nombresApoderado');
+            const apellido1ApoderadoField = document.getElementById('apellido1Apoderado');
+            const apellido2ApoderadoField = document.getElementById('apellido2Apoderado');
+
+            if (emailField.offsetParent !== null && !emailField.checkValidity()) {
+                emailField.focus();
+                event.preventDefault();
+                return;
+            }
+
+            if (direccionField.offsetParent !== null && !direccionField.checkValidity()) {
+                direccionField.focus();
+                event.preventDefault();
+                return;
+            }
+
+            if (numeroDocumentoApoderadoField.offsetParent !== null && !numeroDocumentoApoderadoField.checkValidity()) {
+                numeroDocumentoApoderadoField.focus();
+                event.preventDefault();
+                return;
+            }
+
+            if (nombresApoderadoField.offsetParent !== null && !nombresApoderadoField.checkValidity()) {
+                nombresApoderadoField.focus();
+                event.preventDefault();
+                return;
+            }
+
+            if (apellido1ApoderadoField.offsetParent !== null && !apellido1ApoderadoField.checkValidity()) {
+                apellido1ApoderadoField.focus();
+                event.preventDefault();
+                return;
+            }
+
+            if (apellido2ApoderadoField.offsetParent !== null && !apellido2ApoderadoField.checkValidity()) {
+                apellido2ApoderadoField.focus();
+                event.preventDefault();
+                return;
+            }
+
+            const tipoDocumentoApoderado = document.getElementById('tipoDocumentoApoderado').value || "";
+            const numeroDocumentoApoderado = numeroDocumentoApoderadoField.value || "";
+            const nombresApoderado = nombresApoderadoField.value || "";
+            const apellido1Apoderado = apellido1ApoderadoField.value || "";
+            const apellido2Apoderado = apellido2ApoderadoField.value || "";
+
+            document.getElementById('tipoDocumentoApoderado').value = tipoDocumentoApoderado;
+            document.getElementById('numeroDocumentoApoderado').value = numeroDocumentoApoderado;
+            document.getElementById('nombresApoderado').value = nombresApoderado;
+            document.getElementById('apellido1Apoderado').value = apellido1Apoderado;
+            document.getElementById('apellido2Apoderado').value = apellido2Apoderado;
+
+            let bienContratado = "";
+            if (document.getElementById('producto').checked) {
+                bienContratado = "Producto";
+            } else if (document.getElementById('servicio').checked) {
+                bienContratado = "Servicio";
+            }
+
+            document.getElementById('bienContratado').value = bienContratado;
+
+            emailjs.sendForm('service_ab1saqw', 'template_t1a3cie', this)// se envía el formulario, este al proveedor
+                .then((response) => {
+                    console.log('Correo enviado!', response.status, response.text);
+                }, (error) => {
+                    console.error('Error al enviar el correo:', error);
+                });
+
+            emailjs.sendForm('service_ab1saqw', 'template_s9esy7h', '#contact-form') // se envía el formulario, este al usuario
+                .then((response) => {
+                    console.log('Correo enviado al usuario!', response.status, response.text);
+                }, (error) => {
+                    console.error('Error al enviar el correo al usuario:', error);
+                });
+
+            // Abrir el modal de confirmación
+            openModal();
+
+            // Vaciar el formulario
+            this.reset();
+        });
+
+
+    </script>
+</body>
+
+</html>
